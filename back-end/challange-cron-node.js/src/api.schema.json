@@ -1,0 +1,173 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "version": "1.3.0",
+        "title": "Challange-Cron-Node.js",
+        "description": "Challange-Cron-Node.js",
+        "termsOfService": "http://api_url/terms/",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/",
+            "description": "Local server"
+        }
+    ],
+    "paths": {
+        "/products?page=1&limit=5": {
+            "get": {
+                "description": "get all products with page limit",
+                "operationId": "products",
+                "parameters": [
+                    {
+                        "name": "page limit",
+                        "in": "header",
+                        "schema": {
+                            "$ref": "#/controller/productController"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The products information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/controller/productController"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/forecast": {
+            "get": {
+                "description": "Get the list of forecast ordered by the most ranked",
+                "operationId": "getForecast",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "schema": {
+                            "$ref": "#/components/schemas/jwtToken"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The list of forecast has been returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TimeForecast"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "BeachForecast": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "$ref": "#/components/schemas/beachName"
+                        },
+                        "lat": {
+                            "$ref": "#/components/schemas/beachLat"
+                        },
+                        "lng": {
+                            "$ref": "#/components/schemas/beachLng"
+                        },
+                        "position": {
+                            "$ref": "#/components/schemas/beachPosition"
+                        },
+                        "rating": {
+                            "type": "number",
+                            "example": 3
+                        },
+                        "swellDirection": {
+                            "type": "number",
+                            "description": "Swell direction in degrees",
+                            "example": 300
+                        },
+                        "swellHeight": {
+                            "type": "number",
+                            "description": "Swell height in meters",
+                            "example": 1
+                        },
+                        "swellPeriod": {
+                            "type": "number",
+                            "description": "Swell period in seconds",
+                            "example": 13.67
+                        },
+                        "waveDirection": {
+                            "type": "number",
+                            "description": "Wave direction in degrees",
+                            "example": 234
+                        },
+                        "waveHeight": {
+                            "type": "number",
+                            "description": "Wave height in meters",
+                            "example": 1.5
+                        },
+                        "windDirection": {
+                            "type": "number",
+                            "description": "Wind direction in degrees",
+                            "example": 234
+                        },
+                        "windSpeed": {
+                            "type": "number",
+                            "description": "Wind speed in meters per second",
+                            "example": 10
+                        },
+                        "time": {
+                            "type": "string",
+                            "example": "2019-05-31T08:00:00+00:00"
+                        }
+                    }
+                }
+            },
+            "UserAuth": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "$ref": "#/components/schemas/email"
+                    },
+                    "password": {
+                        "$ref": "#/components/schemas/password"
+                    }
+                }
+            },
+            "UserCreatedResponse": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "$ref": "#/components/schemas/name"
+                            },
+                            "email": {
+                                "$ref": "#/components/schemas/email"
+                            },
+                            "password": {
+                                "$ref": "#/components/schemas/password"
+                            },
+                            "id": {
+                                "$ref": "#/components/schemas/id"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

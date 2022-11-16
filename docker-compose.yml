@@ -1,0 +1,39 @@
+services:
+  web:
+    build: ./front-end/products-food-react
+    command: yarn dev
+    depends_on:
+      - api
+    ports:
+      - "5173:5173"
+    networks:
+      - network-backend
+  api: 
+    build: ./back-end/challange-cron-node.js
+    command: yarn dev
+    depends_on:
+      - mongo
+    ports:
+      - "3000:3000"
+    networks: 
+     - network-backend
+  
+  mongo:
+    image: mongo:4.4.6
+    restart: always
+    ports:
+      - 21017:27017
+    volumes: 
+      - mongodb_data:/data/db
+
+    # uncomment following lines to access db locally
+    # ports:
+  
+    networks: 
+     - network-backend
+
+networks:
+  network-backend:
+
+volumes: 
+  mongodb_data:
