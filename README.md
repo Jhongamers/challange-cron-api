@@ -33,6 +33,12 @@ Mongodb, Vitest, Vite, Styled-Components
  https://github.com/Jhongamers/challange-cron-api.git
 ```
 
+**configs va até a pasta back-end/challange-cron-node.js  e crie um arquivo .env com as seguintes variaveis ambientes**
+`MONGO_URL=mongodb://localhost:21017/products`
+`CRON=0 0 * * *` 
+
+**este cron acima eu configurei para executar todos os dias 00h voce pode configurar para executar no momento que for subir a aplicação se não configurar o container vai subir sem nenhum produto no banco de dados**
+
 **na raiz do challange-cron-api  digite composer **
 
 `docker-compose up`
