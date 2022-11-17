@@ -3,6 +3,7 @@ import { cpuUsage } from 'process';
 import fetchNewProducts from './fetchNewProducts';
 import fs from 'fs';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 
 dotenv.config();
 
@@ -23,8 +24,8 @@ const writeCronFile = () => {
 const readCronFile = (): JSON => {
   const data = fs.readFileSync('./cron.json', 'utf-8');
   const parseData = JSON.parse(data);
-
-  return Object.assign(parseData, usageMemory());
+    const mongoStatus = {mongoStatusDB:getMongoStatus()}
+  return Object.assign(parseData, usageMemory(),mongoStatus);
 }
 
 const usageMemory = () => {
@@ -32,5 +33,24 @@ const usageMemory = () => {
   const now = Date.now();
   while (Date.now() - now < 500);
   return { userMemory: cpuUsage(startMemory).user, systemMemory: cpuUsage(startMemory).system };
+}
+
+const getMongoStatus = () => {
+   switch (mongoose.connection.readyState) {
+    case 0:
+      return 'disconnected'
+      break;
+    case 1:
+      return 'connected'
+      break;
+    case 2:
+      return 'connecting'
+      break;
+    case 3:
+      return 'disconnecting'
+      break;
+  }
+
+      
 }
 export default { runCronService, writeCronFile, readCronFile };
