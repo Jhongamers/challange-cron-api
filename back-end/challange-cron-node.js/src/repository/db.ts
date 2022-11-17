@@ -12,7 +12,7 @@ const dbconnect = async() => {
         console.log('MongoDB server not initialized');
      }
     
-     await mongoose.connect("mongodb://localhost:21017/products").then(() => {
+     await mongoose.connect(MONGO_URL).then(() => {
 
             console.log('sucess');
 

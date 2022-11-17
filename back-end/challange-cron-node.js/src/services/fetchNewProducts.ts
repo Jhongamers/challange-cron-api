@@ -23,11 +23,9 @@ const fetchNewProducts = async(): Promise<void> =>{
         if(!hist){
             storeHistory.push(line.split(','));
             history.create({name:line});
-        }else{
-            console.log('é igual');
         }
     }
-    console.log('esta aqui');
+        console.log('cron executando...');
        downloadProductsService(storeHistory);
     });
 

@@ -2,10 +2,13 @@ import cron from 'node-cron';
 import { cpuUsage } from 'process';
 import fetchNewProducts from './fetchNewProducts';
 import fs from 'fs';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const runCronService = () => {
 
-  cron.schedule('0 0 * * *', async () => {
+  cron.schedule(process.env.CRON, async () => {
     await fetchNewProducts();
     writeCronFile();
     console.log('runing cron job');
